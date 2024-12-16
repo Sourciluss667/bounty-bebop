@@ -1,0 +1,12 @@
+.App {
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.content {
+  width: 100%;
+  flex: 1;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+}
+

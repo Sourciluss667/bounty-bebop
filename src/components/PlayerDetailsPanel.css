@@ -1,0 +1,9 @@
+.textfield-root:hover .copy-button {
+    opacity: 1 !important;
+}
+
+.copy-button {
+    opacity: 0 !important;
+    transition: opacity 0.2s;
+    margin-right: -2px;
+}
