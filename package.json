@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@latticexyz/react": "^2.2.14",
+    "@latticexyz/recs": "^2.2.14",
+    "@latticexyz/store": "^2.2.14",
+    "@latticexyz/utils": "^2.2.14",
+    "@latticexyz/world": "^2.2.14",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/themes": "^3.1.6",
     "cra-template-typescript": "1.2.0",

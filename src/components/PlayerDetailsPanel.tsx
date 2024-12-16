@@ -8,6 +8,7 @@ import { EthereumIcon } from '../assets/svg/EthereumIcon';
 import { ClipboardCopyIcon } from '@radix-ui/react-icons';
 
 import './PlayerDetailsPanel.css';
+import Activities from './details/Activities';
 
 export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string }) {
     const { player } = usePlayerById(playerAddress);
@@ -92,12 +93,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                     <Tabs.Trigger value="transactions">Bounties</Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="activities">
-                    <Flex direction="column" gap="4" style={{ padding: '1rem' }}>
-                        <Heading>Activities</Heading>
-                        <Flex direction="column" gap="4">
-                            <Text>WIP - Coming soon</Text>
-                        </Flex>
-                    </Flex>
+                    <Activities playerId={player.id} />
                 </Tabs.Content>
                 <Tabs.Content value="assets">
                     <Flex direction="column" gap="4" style={{ padding: '1rem' }}>
