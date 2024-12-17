@@ -33,7 +33,7 @@ export default function Players() {
     }
 
     return (
-            <Flex direction="column" gap="4" style={{ padding: '1rem' }}>
+            <Flex direction="column" gap="4" style={{ padding: '1rem', height: '100%' }}>
                 <Flex direction="row" gap="4" justify="between">
                     <Flex direction="row" gap="4">
                         <Heading>Players</Heading>
@@ -55,9 +55,9 @@ export default function Players() {
                         <Spinner />
                     </Flex>
                 ) : (
-                    <Flex direction="row" gap="4" style={{ flex: 1, width: '100%' }}>
+                    <Flex direction="row" gap="4" style={{ flex: 1, width: '100%', overflowY: 'hidden' }}>
                         <Table.Root style={{ flex: 3, width: '100%' }}>
-                            <Table.Header>
+                            <Table.Header style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'var(--accent-2)' }}>
                                 <Table.Row>
                                     <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
                                     <Table.ColumnHeaderCell>Address</Table.ColumnHeaderCell>
@@ -67,20 +67,20 @@ export default function Players() {
                                     <Table.ColumnHeaderCell>Avatar</Table.ColumnHeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                            <Table.Body>
-                                {filteredPlayers.map((_player) => (
-                                    <Table.Row key={_player.id} onClick={() => handlePlayerClick(_player)} style={{ cursor: 'pointer', backgroundColor: _player.id === player?.id ? 'var(--accent-3)' : 'transparent' }}>
-                                        <Table.Cell>{_player.name}</Table.Cell>
-                                        <Table.Cell>{_player.address}</Table.Cell>
-                                        <Table.Cell>N/A</Table.Cell>
-                                        <Table.Cell>N/A</Table.Cell>
-                                        <Table.Cell>N/A</Table.Cell>
-                                        <Table.Cell>
-                                            <img src={_player.image} alt={_player.name} width={32} height={32} />
-                                        </Table.Cell>
-                                    </Table.Row>
-                                ))}
-                            </Table.Body>
+                                <Table.Body style={{ overflowY: 'auto', height: '100%' }}>
+                                    {filteredPlayers.map((_player) => (
+                                        <Table.Row key={_player.id} onClick={() => handlePlayerClick(_player)} style={{ cursor: 'pointer', backgroundColor: _player.id === player?.id ? 'var(--accent-3)' : 'transparent' }}>
+                                            <Table.Cell>{_player.name}</Table.Cell>
+                                            <Table.Cell>{_player.address}</Table.Cell>
+                                            <Table.Cell>N/A</Table.Cell>
+                                            <Table.Cell>N/A</Table.Cell>
+                                            <Table.Cell>N/A</Table.Cell>
+                                            <Table.Cell>
+                                                <img src={_player.image} alt={_player.name} width={32} height={32} />
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    ))}
+                                </Table.Body>
                         </Table.Root>
                         {player && <PlayerDetailsPanel playerAddress={player.address} />}
                     </Flex>

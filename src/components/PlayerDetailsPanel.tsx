@@ -5,10 +5,10 @@ import { usePlayerById } from '../hooks/usePlayerById';
 import { EveTokenIcon } from '../assets/svg/EveTokenIcon';
 import { formatTooLongString, formatWei } from '../utils';
 import { EthereumIcon } from '../assets/svg/EthereumIcon';
-import { ClipboardCopyIcon } from '@radix-ui/react-icons';
+import { CopyButton } from './CopyButton';
+import Activities from './details/Activities';
 
 import './PlayerDetailsPanel.css';
-import Activities from './details/Activities';
 
 export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string }) {
     const { player } = usePlayerById(playerAddress);
@@ -30,9 +30,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                                 <Text style={{ color: 'var(--accent-11)' }}>ID&nbsp;</Text>
                             </TextField.Slot>
                             <TextField.Slot>
-                                <Button variant="ghost" size="1" className="copy-button">
-                                    <ClipboardCopyIcon color="var(--accent-9)" />
-                                </Button>
+                                <CopyButton text={player.id} />
                             </TextField.Slot>
                         </TextField.Root>
                     </Tooltip>
@@ -43,9 +41,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                                 <Text style={{ color: 'var(--accent-11)' }}>Address&nbsp;</Text>
                             </TextField.Slot>
                             <TextField.Slot>
-                                <Button variant="ghost" size="1" className="copy-button">
-                                    <ClipboardCopyIcon color="var(--accent-9)" />
-                                </Button>
+                                <CopyButton text={player.address} />
                             </TextField.Slot>
                         </TextField.Root>
                     </Tooltip>
@@ -55,9 +51,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                             <Text style={{ color: 'var(--accent-11)' }}>Corp ID&nbsp;</Text>
                         </TextField.Slot>
                         <TextField.Slot>
-                            <Button variant="ghost" size="1" className="copy-button">
-                                <ClipboardCopyIcon color="var(--accent-9)" />
-                            </Button>
+                            <CopyButton text={player.corpId} />
                         </TextField.Slot>
                     </TextField.Root>
 
@@ -66,9 +60,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                             <EveTokenIcon color="var(--accent-11)" />
                         </TextField.Slot>
                         <TextField.Slot>
-                            <Button variant="ghost" size="1" className="copy-button">
-                                <ClipboardCopyIcon color="var(--accent-9)" />
-                            </Button>
+                            <CopyButton text={formatWei(player.eveBalanceWei).toString()} />
                         </TextField.Slot>
                     </TextField.Root>
 
@@ -78,9 +70,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                                 <EthereumIcon color="var(--accent-11)" />
                             </TextField.Slot>
                             <TextField.Slot>
-                                <Button variant="ghost" size="1" className="copy-button">
-                                    <ClipboardCopyIcon color="var(--accent-9)" />
-                                </Button>
+                                <CopyButton text={formatWei(player.gasBalanceWei).toString()} />
                             </TextField.Slot>
                         </TextField.Root>
                     </Tooltip>
