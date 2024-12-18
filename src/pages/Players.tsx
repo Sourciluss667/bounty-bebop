@@ -27,8 +27,8 @@ export default function Players() {
             .filter((player) => player.name.toLowerCase().includes(search.toLowerCase()))
             .map((player) => ({
                 ...player,
-                kills: killReports.filter((report) => report.victim.address === player.address).length,
-                deaths: killReports.filter((report) => report.killer.address === player.address).length,
+                kills: killReports.filter((report) => report.killer.address === player.address).length,
+                deaths: killReports.filter((report) => report.victim.address === player.address).length,
             }))
             .sort((a, b) => {
                 if (sort === 'kills') {

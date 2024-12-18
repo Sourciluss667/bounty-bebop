@@ -29,8 +29,8 @@ export function Activity({ killReport, playerAddress }: {killReport: KillReport,
         <Tooltip content={fullDate}>
           <Text>{dateToDisplay}</Text>
         </Tooltip>
-        <Text>{killReport.killer.name}</Text>
-        <Text>{killReport.victim.name}</Text>
+        {isVictim && <Text>Killed by {killReport.killer.name}</Text>}
+        {!isVictim && <Text>Killed {killReport.victim.name}</Text>}
       </Flex>
     </Box>
   );

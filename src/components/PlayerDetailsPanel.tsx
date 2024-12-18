@@ -3,6 +3,7 @@ import './PlayerDetailsPanel.css';
 import { Flex, Heading, ScrollArea, Spinner, Tabs, Text, TextField, Tooltip } from '@radix-ui/themes';
 
 import Activities from './details/Activities';
+import Assets from './details/Assets';
 import { CopyButton } from './CopyButton';
 import { EthereumIcon } from '../assets/svg/EthereumIcon';
 import { EveTokenIcon } from '../assets/svg/EveTokenIcon';
@@ -87,12 +88,7 @@ export function PlayerDetailsPanel({ playerAddress }: { playerAddress: string })
                       <Activities playerAddress={player.address} />
                   </Tabs.Content>
                   <Tabs.Content value="assets">
-                      <Flex direction="column" gap="4" style={{ padding: '1rem' }}>
-                          <Heading>Assets</Heading>
-                          <Flex direction="column" gap="4">
-                              <Text>WIP - Coming soon</Text>
-                          </Flex>
-                      </Flex>
+                      <Assets smartAssemblies={player.smartAssemblies} />
                   </Tabs.Content>
                   <Tabs.Content value="transactions">
                       <Flex direction="column" gap="4" style={{ padding: '1rem' }}>

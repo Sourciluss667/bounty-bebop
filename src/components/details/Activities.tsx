@@ -1,5 +1,6 @@
+import { Flex, Text } from '@radix-ui/themes';
+
 import { Activity } from './Activity';
-import { Flex } from '@radix-ui/themes';
 import React from 'react';
 import { useKillReports } from '../../hooks/useKillReports';
 
@@ -16,6 +17,9 @@ export default function Activities({ playerAddress }: { playerAddress: string })
           {playerReports.map((killReport) => (
             <Activity killReport={killReport} playerAddress={playerAddress} />
           ))}
+          {playerReports.length === 0 && (
+            <Text>No activities found</Text>
+          )}
         </Flex>
     );
 }
