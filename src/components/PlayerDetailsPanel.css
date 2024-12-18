@@ -2,6 +2,10 @@
     opacity: 1 !important;
 }
 
+.textfield-root input {
+    text-overflow: ellipsis;
+}
+
 .copy-button {
     opacity: 0 !important;
     transition: opacity 0.2s;
