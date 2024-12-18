@@ -21,6 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "build:docker": "docker build -t sourciluss/bounty-bebop:latest .",
+    "run:docker": "docker run -p 80:80 sourciluss/bounty-bebop:latest",
+    "push:docker": "docker push sourciluss/bounty-bebop:latest",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w"
   },

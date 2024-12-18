@@ -24,7 +24,7 @@ export default function Players() {
     const filteredPlayers: (Player & { kills: number, deaths: number })[] = useMemo(() => {
         setSearchLoading(true);
         const filtered = players
-            .filter((player) => player.name.toLowerCase().includes(search.toLowerCase()))
+            .filter((player) => player.name.toLowerCase().includes(search.toLowerCase()) && player.address !== '0x0000000000000000000000000000000000000000')
             .map((player) => ({
                 ...player,
                 kills: killReports.filter((report) => report.killer.address === player.address).length,
