@@ -1,28 +1,46 @@
 import { Flex, Heading, IconButton, Spinner, Table, TextField } from '@radix-ui/themes';
 import React, { useCallback, useMemo, useState } from 'react';
-import { usePlayers } from '../hooks/usePlayers';
-import { Player } from '../types';
 
-import { PlayerDetailsPanel } from '../components/PlayerDetailsPanel';
 import { Cross1Icon } from '@radix-ui/react-icons';
+import { Player } from '../types';
+import { PlayerDetailsPanel } from '../components/PlayerDetailsPanel';
 import { debounce } from '../utils';
+import { useKillReports } from '../hooks/useKillReports';
+import { usePlayers } from '../hooks/usePlayers';
 
 export default function Players() {
     const { players } = usePlayers();
+    const { killReports } = useKillReports();
 
     const [player, setPlayer] = useState<Player | null>(null);
 
     const [searchLoading, setSearchLoading] = useState(false);
     const [search, _setSearch] = useState('');
+    const [sort, setSort] = useState<'default' | 'kills' | 'deaths'>('deaths');
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     const setSearch = useCallback(debounce(_setSearch, 300), []);
 
-    const filteredPlayers = useMemo(() => {
+    const filteredPlayers: (Player & { kills: number, deaths: number })[] = useMemo(() => {
         setSearchLoading(true);
-        const filtered = players.filter((player) => player.name.toLowerCase().includes(search.toLowerCase()));
+        const filtered = players
+            .filter((player) => player.name.toLowerCase().includes(search.toLowerCase()))
+            .map((player) => ({
+                ...player,
+                kills: killReports.filter((report) => report.victim.address === player.address).length,
+                deaths: killReports.filter((report) => report.killer.address === player.address).length,
+            }))
+            .sort((a, b) => {
+                if (sort === 'kills') {
+                    return sortDirection === 'asc' ? a.kills - b.kills : b.kills - a.kills;
+                } else if (sort === 'deaths') {
+                    return sortDirection === 'asc' ? a.deaths - b.deaths : b.deaths - a.deaths;
+                }
+                return 0;
+            });
         setSearchLoading(false);
         return filtered;
-    }, [players, search]);
+    }, [killReports, players, search, sort, sortDirection]);
 
     const handlePlayerClick = (_player: Player) => {
         setPlayer(_player);
@@ -61,8 +79,12 @@ export default function Players() {
                                 <Table.Row>
                                     <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
                                     <Table.ColumnHeaderCell>Address</Table.ColumnHeaderCell>
-                                    <Table.ColumnHeaderCell>Kills</Table.ColumnHeaderCell>
-                                    <Table.ColumnHeaderCell>Deaths</Table.ColumnHeaderCell>
+                                    <Table.ColumnHeaderCell onClick={() => { setSort('kills'); setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc'); }} style={{ cursor: 'pointer' }}>
+                                        Kills&nbsp;&nbsp;{sort === 'kills' ? sortDirection === 'asc' ? '▲' : '▼' : ''}
+                                    </Table.ColumnHeaderCell>
+                                    <Table.ColumnHeaderCell onClick={() => { setSort('deaths'); setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc'); }} style={{ cursor: 'pointer' }}>
+                                        Deaths&nbsp;&nbsp;{sort === 'deaths' ? sortDirection === 'asc' ? '▲' : '▼' : ''}
+                                    </Table.ColumnHeaderCell>
                                     <Table.ColumnHeaderCell>Wanted</Table.ColumnHeaderCell>
                                     <Table.ColumnHeaderCell>Avatar</Table.ColumnHeaderCell>
                                 </Table.Row>
@@ -72,8 +94,8 @@ export default function Players() {
                                         <Table.Row key={_player.id} onClick={() => handlePlayerClick(_player)} style={{ cursor: 'pointer', backgroundColor: _player.id === player?.id ? 'var(--accent-3)' : 'transparent' }}>
                                             <Table.Cell>{_player.name}</Table.Cell>
                                             <Table.Cell>{_player.address}</Table.Cell>
-                                            <Table.Cell>N/A</Table.Cell>
-                                            <Table.Cell>N/A</Table.Cell>
+                                            <Table.Cell>{_player.kills}</Table.Cell>
+                                            <Table.Cell>{_player.deaths}</Table.Cell>
                                             <Table.Cell>N/A</Table.Cell>
                                             <Table.Cell>
                                                 <img src={_player.image} alt={_player.name} width={32} height={32} />
